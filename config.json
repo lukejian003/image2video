@@ -1,0 +1,11 @@
+{
+  "audioDir": "audio",
+  "imageFile": "image.jpg",
+  "videoDir": "video",
+  "imageDir": "images",
+  "watermarkFontSize": 190,
+  "watermarkX": "(w-tw)/2",
+  "watermarkY": "(h-th)/2",
+  "watermarkFontPath": "font.ttf",
+  "ffmpegPath": "ffmpeg/bin/ffmpeg"
+}

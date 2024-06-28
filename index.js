@@ -5,7 +5,36 @@ const ffmpeg = require('fluent-ffmpeg');
 const sizeOf = require('image-size');
 const { createCanvas, loadImage, registerFont } = require('canvas');
 const ProgressBar = require('./progress_bar.js');
-const config = require('./config.json');
+// const config = require('./config.json');
+let config = {}
+async function loadConfig() {
+  const configPath = path.join(process.cwd(), 'config.json');
+  try {
+    await fs.access(configPath);
+  } catch (error) {
+    console.error('config.json 文件不存在，正在创建该文件...');
+    const defaultConfig = {
+      "audioDir": "audio",
+      "imageFile": "image.jpg",
+      "videoDir": "video",
+      "imageDir": "images",
+      "watermarkFontSize": 190,
+      "watermarkX": "(w-tw)/2",
+      "watermarkY": "(h-th)/2",
+      "watermarkFontPath": "font.ttf",
+      "ffmpegPath": "ffmpeg/bin/ffmpeg"
+    };
+    try {
+      await fs.writeFile(configPath, JSON.stringify(defaultConfig, null, 2));
+      console.log('config.json 文件创建成功。');
+    } catch (err) {
+      console.error(`无法创建 config.json 文件: ${err.message}`);
+      throw err;
+    }
+  }
+  const configData = await fs.readFile(configPath, 'utf-8');
+  return JSON.parse(configData);
+}
 
 // 确保输出文件夹存在，如果不存在就自动创建
 async function ensureDirectoryExists(directory) {
@@ -85,6 +114,7 @@ async function logError(error) {
 // 入口函数
 async function main() {
   try {
+    config = await loadConfig();
     await ensureErrorLogFileExists();
     await ensureOutputDirectoriesExist();
     await ensureAudioDirectoryExists();
@@ -163,6 +193,7 @@ async function compositeImages(backgroundImagePath, watermarkBuffer, width, heig
 async function generateVideo(audioPath, imagePath, videoPath, width, height, pb) {
   return new Promise((resolve, reject) => {
     ffmpeg()
+      .setFfmpegPath(config.ffmpegPath)
       .input(audioPath)
       .input(imagePath)
       .videoCodec('libx264')

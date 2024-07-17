@@ -166,16 +166,44 @@ async function main() {
   }
 }
 
-async function generateWatermark(text, fontPath, fontSize, width, height) {
+async function generateWatermark(text, fontPath, fontSize, width, height, lineHeight = fontSize * 1.2) {
   registerFont(fontPath, { family: 'custom-font' });
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
   ctx.font = `${fontSize}px "custom-font"`;
-  ctx.fillStyle = 'white';
-  ctx.textBaseline = 'middle';
+  ctx.fillStyle = config.fillStyle;
+  ctx.textBaseline = 'top'; // 从顶部开始绘制
   ctx.textAlign = 'center';
-  ctx.fillText(text, width / 2, height / 2);
-  return canvas.toBuffer();
+
+  let words = text.split('');
+  let lines = [];
+  let currentLine = words[0];
+  let lineWidth = ctx.measureText(currentLine).width;
+
+  for (let n = 1; n < words.length; n++) {
+    let testLine = currentLine + words[n];
+    let metrics = ctx.measureText(testLine);
+    let testWidth = metrics.width;
+    if (testWidth < width && words[n] !== '') {
+      currentLine = testLine;
+      lineWidth = testWidth;
+    } else {
+      lines.push(currentLine);
+      currentLine = words[n];
+      lineWidth = ctx.measureText(currentLine).width;
+    }
+  }
+  lines.push(currentLine);
+
+  const xPosition = config.xPosition || width / 2
+  const yPosition = config.yPosition || (height / 2) - (lineHeight / 2 * lines.length)
+  let y = yPosition;
+  for (let line of lines) {
+    ctx.fillText(line, xPosition, y);
+    y += lineHeight;
+  }
+
+  return canvas.toBuffer('image/png');
 }
 
 async function compositeImages(backgroundImagePath, watermarkBuffer, width, height) {

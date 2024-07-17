@@ -13,3 +13,7 @@
 2024-06-28T02:49:59.229Z: 视频生成错误: Cannot find ffmpeg
 2024-06-28T02:53:09.744Z: 视频生成错误: Cannot find ffmpeg
 2024-06-28T02:54:56.511Z: 视频生成错误: Cannot find ffmpeg
+2024-07-17T08:23:13.726Z: maxWidth is not defined
+2024-07-17T08:25:12.077Z: lineHeight is not defined
+2024-07-17T08:26:43.711Z: Assignment to constant variable.
+2024-07-17T08:28:12.996Z: canvas.toBuffer is not a function

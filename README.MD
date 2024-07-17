@@ -19,10 +19,11 @@
 - `imageFile`：要用于视频的图像文件的名称。
 - `videoDir`：生成的视频文件将保存在的目录。
 - `imageDir`：中间图像文件将保存在的目录。
-- `watermarkFontSize`：水印文本的字体大小。
-- `watermarkX`：放置水印文本的 X 坐标。
-- `watermarkY`：放置水印文本的 Y 坐标。
-- `watermarkFontPath`：水印文本的字体文件路径。
+- `watermarkFontSize`：文本的字体大小。
+- `fillStyle`：文本的字体颜色。
+- `xPosition`：文本的x轴位置，0为居中。
+- `yPosition`：文本的y轴位置，0为居中。
+- `watermarkFontPath`：文本的字体文件路径。
 - `ffmpegPath`：FFmpeg 可执行文件的路径。
 
 ## 错误处理

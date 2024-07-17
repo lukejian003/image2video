@@ -1,6 +1,6 @@
 {
   "name": "image2video",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "用一张图片生成视频的小工具",
   "bin": "index.js",
   "scripts": {

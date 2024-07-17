@@ -19,8 +19,9 @@ async function loadConfig() {
       "videoDir": "video",
       "imageDir": "images",
       "watermarkFontSize": 190,
-      "watermarkX": "(w-tw)/2",
-      "watermarkY": "(h-th)/2",
+      "fillStyle": "#ff5a5d",
+      "xPosition": 0,
+      "yPosition": 0,
       "watermarkFontPath": "font.ttf",
       "ffmpegPath": "ffmpeg/bin/ffmpeg"
     };

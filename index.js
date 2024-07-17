@@ -226,7 +226,7 @@ async function generateVideo(audioPath, imagePath, videoPath, width, height, pb)
       .input(imagePath)
       .videoCodec('libx264')
       .size(`${width}x${height}`)
-      .outputOptions(['-pix_fmt yuv420p', '-crf 24', '-preset 8', '-r 6', '-b:v 6M', '-x264-params', 'keyint=infinite:scenecut=60', '-vf', 'scale=768:432:flags=lanczos'])
+      .outputOptions(['-pix_fmt yuv420p', '-crf 24', '-preset 8', '-r 6', '-b:v 6M', '-x264-params', 'keyint=infinite:scenecut=60', '-vf', `scale=${width}:${height}:flags=lanczos`])
       .save(videoPath)
       .on('progress', (progress) => {
         const percent = progress.percent.toFixed(2);
